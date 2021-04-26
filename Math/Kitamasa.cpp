@@ -50,5 +50,5 @@ private:
 };
 
 /*
- * @see
+ * @see https://scrapbox.io/daikimatsuoka/Kitamasa_%E6%B3%95
  */
