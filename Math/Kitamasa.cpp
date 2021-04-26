@@ -6,6 +6,7 @@ class Kitamasa {
 public:
     Kitamasa(std::vector<T> _a, std::vector<T> _d, int _k) :a(_a), d(_d), k(_k) {}
 private:
+    // f_{n} -> f_{n+1}
     std::vector<T> Calc1(std::vector<T> x) {
         std::vector<T> res(k);
         for (int i = 0; i < k; ++i) {
@@ -13,6 +14,7 @@ private:
         }
         return res;
     }
+    // f_{n} -> f_{2*n}
     std::vector<T> Calc2(std::vector<T> x) {
         std::vector<T> res(k), y = x;
         for (int i = 0; i < k; ++i) {
