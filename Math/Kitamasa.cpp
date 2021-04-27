@@ -30,7 +30,7 @@ public:
         if (n < k) {
             return a[n];
         }
-        std::vector<T> f = Solve2(n);
+        std::vector<T> f = Rec(n);
         T res = 0;
         for (int i = 0; i < k; ++i) {
             res += f[i] * a[i];
@@ -38,13 +38,13 @@ public:
         return res;
     }
 private:
-    std::vector<T> Solve2(long long n) {
+    std::vector<T> Rec(long long n) {
         if (n == k) {
             return d;
-        } else if (n % 2 == 0 && n / 2 >= k) {
-            return Calc2(Solve2(n / 2));
+        } else if (!(n & 1) && n >= (k << 1)) {
+            return Calc2(Rec(n >> 1));
         } else {
-            return Calc1(Solve2(n - 1));
+            return Calc1(Rec(n - 1));
         }
     }
 };
