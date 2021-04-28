@@ -1,8 +1,8 @@
 #include <vector>
 template<typename T>
 class Kitamasa {
-    int k;
     std::vector<T> a, d;
+    int k;
 public:
     Kitamasa(std::vector<T> _a, std::vector<T> _d, int _k) :a(_a), d(_d), k(_k) {}
 private:
