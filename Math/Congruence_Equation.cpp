@@ -105,31 +105,37 @@ class congruence_equation {
 
     // p is prime
     // return x s.t. ax = b mod p
-    constexpr long long solve_linear_congruence_equation(long long a, long long b, long long p) {
+    std::vector<long long> solve_linear_congruence_equation(long long a, long long b, long long p) {
+        std::vector<long long> solutions;
         a = safe_mod(a, p);
         b = safe_mod(b, p);
-        std::pair<long long, long long> inv = inv_gcd(a, p);
-        return safe_mod(inv.second * b, p);
+        if (a == 0 && b == 0) {
+            for (int i = 0; i < p; ++i) solutions.emplace_back(i);
+        } else if (a != 0) {
+            std::pair<long long, long long> inv = inv_gcd(a, p);
+            solutions.emplace_back(safe_mod(inv.second * b, p));
+        }
+        return solutions;
     }
 
-    // calc F(x) mod p
-    long long substitution(long long x, long long p) {
+    // calc F(x) mod m
+    long long substitution(long long x, long long m) {
         long long res = 0;
         long long y = 1;
         for (long long AA : A) {
-            (res += AA * y) %= p;
-            (y *= x) %= p;
+            (res += AA * y) %= m;
+            (y *= x) %= m;
         }
         return res;
     }
 
     // calc F'(x) mod p
-    long long substitution2(long long x, long long p) {
+    long long substitution2(long long x, long long m) {
         long long res = 0;
         long long y = 1;
         for (long long BB : B) {
-            (res += BB * y) %= p;
-            (y *= x) %= p;
+            (res += BB * y) %= m;
+            (y *= x) %= m;
         }
         return res;
     }
@@ -146,22 +152,21 @@ class congruence_equation {
             return solutions;
         }
         std::vector<long long> pre_solutions = solve_congruence_equation_with_prime_power(p, n - 1);
-        long long p1 = std::pow(p, n - 1);
+        long long pw = std::pow(p, n - 1);
         for (long long x0 : pre_solutions) {
-            // c + d * y0 = 0 mod p
-            long long f_x0 = substitution(x0, p1 * p);
-            long long c = f_x0 / p1;
+            long long f_x0 = substitution(x0, pw * p);
+            long long c = f_x0 / pw;
             long long d = substitution2(x0, p);
-            long long y0 = solve_linear_congruence_equation(d, -c, p);
-            solutions.emplace_back(safe_mod(x0 + p1 * y0, p1 * p));
+            std::vector<long long> y = solve_linear_congruence_equation(d, -c, p);
+            for (long long yy : y) {
+                solutions.emplace_back(safe_mod(x0 + pw * yy, pw * p));
+            }
         }
         return solutions;
     }
 
 public:
-    congruence_equation(std::vector<long long>& _A, long long _M) {
-        std::swap(A, _A);
-        std::swap(M, _M);
+    congruence_equation(std::vector<long long>& _A, long long _M) :A(_A), M(_M) {
         N = (int) A.size();
         std::vector<long long> _B;
         for (int i = 0; i < N; ++i) A[i] = safe_mod(A[i], M);
