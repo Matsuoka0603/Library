@@ -1,35 +1,29 @@
+template <typename T>
+T inverse(T a, T m) {
+    T u = 0, v = 1;
+    while (a != 0) {
+        T t = m / a;
+        m -= t * a; swap(a, m);
+        u -= t * v; swap(u, v);
+    }
+    assert(m == 1);
+    return u;
+}
+ 
 template<int mod>
 class Modular {
 private:
-    int x;
+    int a;
 public:
-    Modular() : x(0) {}
-    Modular(long long y) : x(y >= 0 ? y % mod : (mod - (-y) % mod) % mod) {}
-    Modular &operator+=(const Modular& p) { if ((x += p.x) >= mod) x -= mod; return *this; }
-    Modular &operator-=(const Modular& p) { if ((x -= p.x) < 0) x += mod; return *this; }
-    Modular &operator*=(const Modular& p) { x = (int) (1LL * x * p.x % mod); return *this; }
-    Modular &operator/=(const Modular& p) { *this *= p.Inverse(); return *this; }
-    Modular operator-() const { return Modular(-x); }
-    Modular operator+(const Modular& p) { return Modular(*this) += p; }
-    Modular operator-(const Modular& p) { return Modular(*this) -= p; }
-    Modular operator*(const Modular& p) { return Modular(*this) *= p; }
-    Modular operator/(const Modular& p) { return Modular(*this) /= p; }
-    bool operator==(const Modular& p) { return x == p.x; }
-    bool operator!=(const Modular& p) { return x != p.x; }
-    friend std::ostream& operator<<(std::ostream& out, const Modular& p) { return out << p.x; }
-    friend std::istream& operator>>(std::istream& in, Modular& a) {
-        long long t;
-        in >> t;
-        a = Modular<mod>(t);
-        return in;
-    }
-    Modular Inverse() const {
-        int a = x, m = mod, u = 1, v = 0, t;
-        while (m > 0) {
-            t = a / m;
-            std::swap(a -= t * m, m);
-            std::swap(u -= t * v, v);
-        }
-        return Modular(u);
-    }
+    constexpr Modular() : a(0) {}
+    constexpr Modular(long long b) : a(b >= 0 ? b % mod : ((b % mod) + mod) % mod) {}
+    constexpr Modular& operator+=(const Modular& rhs) noexcept { if ((a += rhs.a) >= mod) a -= mod; return *this; }
+    constexpr Modular& operator-=(const Modular& rhs) noexcept { if ((a -= rhs.a) < 0) a += mod; return *this; }
+    constexpr Modular& operator*=(const Modular& rhs) noexcept { a = (int) (1LL * a * rhs.a % mod); return *this; }
+    constexpr Modular& operator/=(const Modular& rhs) noexcept { return *this *= Modular(inverse(rhs.a, mod)); }
+    constexpr Modular operator+(const Modular& rhs) const noexcept { return Modular(*this) += rhs; }
+    constexpr Modular operator-(const Modular& rhs) const noexcept { return Modular(*this) -= rhs; }
+    constexpr Modular operator*(const Modular& rhs) const noexcept { return Modular(*this) *= rhs; }
+    constexpr Modular operator/(const Modular& rhs) const noexcept { return Modular(*this) /= rhs; }
+    friend std::ostream& operator<<(std::ostream& out, const Modular& rhs) { return out << rhs.a; }
 };
