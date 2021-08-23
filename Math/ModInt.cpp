@@ -9,7 +9,7 @@ public:
     constexpr Modular(long long b) : a(b >= 0 ? b % mod : ((b % mod) + mod) % mod) {}
     constexpr Modular& operator+=(const Modular& rhs) noexcept { if ((a += rhs.a) >= mod) a -= mod; return *this; }
     constexpr Modular& operator-=(const Modular& rhs) noexcept { if ((a -= rhs.a) < 0) a += mod; return *this; }
-    constexpr Modular& operator*=(const Modular& rhs) noexcept { a = (int) (1LL * a * rhs.a % mod); return *this; }
+    constexpr Modular& operator*=(const Modular& rhs) noexcept { a = int(1LL * a * rhs.a % mod); return *this; }
     constexpr Modular& operator/=(const Modular& rhs) noexcept { return *this *= Modular(inverse(rhs.a, mod)); }
     constexpr Modular operator+(const Modular& rhs) const noexcept { return Modular(*this) += rhs; }
     constexpr Modular operator-(const Modular& rhs) const noexcept { return Modular(*this) -= rhs; }
