@@ -1,6 +1,5 @@
-template <typename T>
-T inverse(T a, T m) { a == 1 ? a : m + (-m * inverse(m % a, a) + 1) / a; }
- 
+long long inverse(long long a, long long m) { return a == 1 ? a : m + (-m * inverse(m % a, a) + 1) / a; }
+
 template<int mod>
 class Modular {
 private:
