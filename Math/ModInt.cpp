@@ -9,7 +9,7 @@ public:
     Modular(long long b) : a(b >= 0 ? b % mod : ((b % mod) + mod) % mod) {}
     Modular& operator+=(Modular& rhs) { if ((a += rhs.a) >= mod) a -= mod; return *this; }
     Modular& operator-=(Modular& rhs) { if ((a -= rhs.a) < 0) a += mod; return *this; }
-    Modular& operator*=(Modular& rhs) { a = (int) (1LL * a * rhs.a % mod); return *this; }
+    Modular& operator*=(Modular& rhs) { a = int(1LL * a * rhs.a % mod); return *this; }
     Modular& operator/=(Modular& rhs) { return *this *= Modular(inv(rhs.a, mod)); }
     Modular operator+(Modular& rhs) { return Modular(*this) += rhs; }
     Modular operator-(Modular& rhs) { return Modular(*this) -= rhs; }
