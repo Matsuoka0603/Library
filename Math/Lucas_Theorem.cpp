@@ -28,7 +28,7 @@ public:
         }
     }
     // binom(n, r) mod p を計算
-    int solve(long long n, long long r) {
+    int Solve(long long n, long long r) {
         if (n < r) {
             return 0;
         }
