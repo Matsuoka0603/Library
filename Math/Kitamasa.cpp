@@ -28,6 +28,7 @@ private:
         return res;
     }
 public:
+    // return a[n]
     T Solve(long long n) {
         if (n < k) {
             return a[n];
