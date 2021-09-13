@@ -1,4 +1,6 @@
 #include <vector>
+
+// 0-index
 template<typename T>
 class Kitamasa {
     std::vector<T> a, d;
