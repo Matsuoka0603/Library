@@ -1,3 +1,18 @@
+long long mod_pow(long long a, long long n, long long p) {
+    __int128_t r = 1;
+    __int128_t b = a;
+    while (n > 0) {
+        if (n & 1) {
+            r *= b;
+            r %= p;
+        }
+        b *= b;
+        b %= p;
+        n /= 2;
+    }
+    return r;
+}
+
 #include <random>
 #include <chrono>
 
